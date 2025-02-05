@@ -28,6 +28,7 @@ from .key_bindings import get_key_bindings
 from .menu.items import get_menu_items, process_menu_item
 from .pager import enable_pager
 from .utils.shell import is_main_cli, switch_to_shell
+from midcli.qt_app.application import launch_application
 
 
 class CLI:
@@ -286,7 +287,13 @@ def main():
                         help='If -c/--command is specified, print its YAML template instead of executing it')
     parser.add_argument('--stacks', action='store_true',
                         help='Display errors stack trace')
+    parser.add_argument('--qt-app', action='store_true',
+                       help='Launch QT5 application')
     args = parser.parse_args()
+
+    if args.qt_app:
+        launch_application()
+        return
 
     cli = CLI(**args.__dict__)
     cli.run()
